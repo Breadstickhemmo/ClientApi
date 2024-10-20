@@ -147,14 +147,12 @@ namespace MyApiApp.Controllers
                 return Unauthorized("Пользователь не авторизован.");
             }
 
-            // Используем userContext для поиска пользователя
             var user = await _userContext.Users.FindAsync(useradd);
             if (user == null)
             {
                 return Unauthorized("Пользователь не найден.");
             }
 
-            // Поиск по контактам пользователя, которые содержат запрос в имени, телефоне или email
             var contacts = await _contactContext.Contacts
                 .Where(c => c.UserAdd == useradd && 
                             (c.Name.Contains(query) || 

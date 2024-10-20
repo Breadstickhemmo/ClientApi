@@ -14,7 +14,7 @@ public class RequestLoggingMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        context.Request.EnableBuffering(); // Включаем возможность повторного чтения потока
+        context.Request.EnableBuffering(); 
 
         using (var scope = context.RequestServices.CreateScope())
         {
@@ -25,14 +25,13 @@ public class RequestLoggingMiddleware
             {
                 string bodyContent = string.Empty;
 
-                // Читаем тело запроса, если это не GET запрос
                 if (context.Request.Method != HttpMethods.Get)
                 {
                     context.Request.Body.Position = 0;
                     using (var reader = new StreamReader(context.Request.Body, Encoding.UTF8, leaveOpen: true))
                     {
                         bodyContent = await reader.ReadToEndAsync();
-                        context.Request.Body.Position = 0; // Сбрасываем позицию обратно
+                        context.Request.Body.Position = 0;
                     }
                 }
 
@@ -43,7 +42,7 @@ public class RequestLoggingMiddleware
                     Path = context.Request.Path,
                     QueryString = context.Request.QueryString.HasValue ? context.Request.QueryString.Value : "",
                     Timestamp = DateTime.UtcNow,
-                    BodyContent = bodyContent // Сохраняем тело запроса
+                    BodyContent = bodyContent
                 };
 
                 historyDbContext.History.Add(historyRecord);
