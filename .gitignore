@@ -1,0 +1,4 @@
+/bin/
+/obj/
+/DB/*
+!/DB/.gitignore
