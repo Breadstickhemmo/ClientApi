@@ -303,7 +303,7 @@ public class Client
     // Метод для поиска контакта по имени с использованием бинарного поиска
     private static async Task SearchContactByName()
     {
-        var contacts = await GetAllContactsArray(); // Получаем массив контактов
+        var contacts = await GetAllContactsArray();
 
         Console.WriteLine("Введите имя контакта для поиска:");
         var nameToSearch = Console.ReadLine();
@@ -336,7 +336,7 @@ public class Client
         if (response.IsSuccessStatusCode)
         {
             var responseContent = await response.Content.ReadAsStringAsync();
-            var contacts = await GetAllContactsArray();
+            var contacts = JsonConvert.DeserializeObject<Contact[]>(responseContent);
 
             if (contacts == null || contacts.Length == 0)
             {

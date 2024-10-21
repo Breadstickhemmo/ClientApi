@@ -73,7 +73,7 @@ namespace MyApiApp.Controllers
             {
                 return Unauthorized("Неправильный текущий пароль.");
             }
-
+            
             user.PasswordHash = _passwordService.HashPassword(request.NewPassword, out string newSalt);
             user.Salt = newSalt;
 
